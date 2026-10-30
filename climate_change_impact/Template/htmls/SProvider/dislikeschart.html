@@ -1,0 +1,131 @@
+{% extends 'SProvider/design1.html' %}
+{% block researchblock %}
+
+<style>
+    .container-fluid {
+        padding: 50px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.1); /* Slight transparency */
+    }
+    .chart-wrapper {
+        display: flex;
+        max-width: 1200px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        animation: fadeIn 1s ease-in;
+    }
+    .sidemenu {
+        background-color: #1a3c34; /* Dark green */
+        padding: 20px;
+        width: 250px; /* Adjusted for layout */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .sidemenu h3 {
+        margin: 0;
+        font-family: 'Russo One', sans-serif; /* From design1.html */
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .sidemenu a {
+        color: #fff;
+        text-decoration: none;
+        padding: 15px;
+        display: block;
+        transition: background-color 0.3s;
+    }
+    .sidemenu a:hover {
+        background-color: #2e5c52; /* Lighter green */
+    }
+    .chart-container {
+        flex-grow: 1;
+        padding: 20px;
+    }
+    #chartContainer {
+        width: 100%;
+        height: 400px;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @media (max-width: 768px) {
+        .chart-wrapper {
+            flex-direction: column;
+        }
+        .sidemenu {
+            width: 100%;
+            padding: 10px;
+        }
+        .sidemenu a {
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+        .chart-container {
+            padding: 10px;
+        }
+        #chartContainer {
+            height: 300px;
+        }
+    }
+</style>
+
+<script>
+window.onload = function() {
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title: {
+            text: "Climate Change Impact Accuracy",
+            fontFamily: "Russo One",
+            fontSize: 24,
+            fontColor: "#2e5c52"
+        },
+        data: [{
+            {% if dislike_chart == "bar" %}
+                type: "bar",
+            {% elif dislike_chart == "pie" %}
+                type: "pie",
+            {% elif dislike_chart == "spline" %}
+                type: "spline",
+            {% endif %}
+            startAngle: 240,
+            yValueFormatString: "##0.00\"%\"",
+            indexLabel: "{label} {y}",
+            indexLabelFontFamily: "Russo One",
+            indexLabelFontColor: "#1a3c34",
+            dataPoints: [
+                {% for o in form %}
+                    {y: {{ o.dcount }}, label: "{{ o.names }}"},
+                {% endfor %}
+            ]
+        }]
+    });
+    chart.render();
+}
+</script>
+
+<div class="container-fluid">
+    <div class="chart-wrapper">
+        <div class="sidemenu">
+            <h3>
+                <a href="{% url 'dislikeschart' 'pie' %}">Pie Chart</a>
+                <a href="{% url 'dislikeschart' 'bar' %}">Bar Chart</a>
+                <a href="{% url 'dislikeschart' 'spline' %}">Spline Chart</a>
+            </h3>
+        </div>
+        <div class="chart-container">
+            <div id="chartContainer"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'SProvider/design1.html' %}
+{% block researchblock %}
+
+<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+<style>
+    .container-fluid {
+        padding: 50px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .content-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 1100px;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 1s ease-in;
+    }
+    .content-title {
+        font-family: 'Russo One', sans-serif; /* Match design1.html */
+        color: #2e5c52; /* Green */
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .tweettext {
+        border: 2px solid #8e4fd1; /* Purple accent */
+        width: 100%;
+        max-height: 400px; /* Adjusted from 442px for balance */
+        overflow-y: auto;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: 'Russo One', sans-serif;
+        color: #333;
+    }
+    .tweettext p {
+        margin: 10px 0;
+        font-size: 1.1rem;
+    }
+    .tweettext p span {
+        color: #ff4d4d; /* Red for emphasis */
+        font-weight: bold;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 20px;
+        }
+        .content-container {
+            padding: 20px;
+        }
+        .content-title {
+            font-size: 1.5rem;
+        }
+        .tweettext {
+            max-height: 300px;
+        }
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="content-container">
+        <h2 class="content-title">Climate Change Impact Logs</h2>
+        <div class="tweettext">
+            <!-- Placeholder content; replace with actual data -->
+            <p><span>Log Entry 1:</span> Prediction completed for Eurasia - 2025-04-10</p>
+            <p><span>Log Entry 2:</span> Dataset trained with 95% accuracy</p>
+            <p><span>Log Entry 3:</span> Impact type ratio updated</p>
+            <!-- Add dynamic content here, e.g., {% for item in logs %}<p>{{ item }}</p>{% endfor %} -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

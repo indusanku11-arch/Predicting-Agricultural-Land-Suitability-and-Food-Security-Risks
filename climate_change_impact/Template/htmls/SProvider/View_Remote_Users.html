@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>View Users</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            color: white;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+                        url("{% static 'bg.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* ================= NAVBAR (SEPARATE) ================= */
+        .navbar-custom {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+        }
+
+        .navbar-brand {
+            color: #00ffc8 !important;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #00ffc8 !important;
+        }
+
+        /* ================= MAIN CONTENT ================= */
+        .main-content {
+            margin-top: 100px; /* Proper separation from navbar */
+            padding: 20px;
+        }
+
+        /* ================= ALERTS ================= */
+        .alert-box {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .custom-alert {
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+        }
+
+        .alert-success { background: rgba(0,255,150,0.2); border-left: 4px solid #00ff96; }
+        .alert-error { background: rgba(255,0,80,0.2); border-left: 4px solid #ff0050; }
+        .alert-warning { background: rgba(255,200,0,0.2); border-left: 4px solid #ffc107; }
+
+        /* ================= TABLE SECTION ================= */
+        .users-container {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(18px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .users-title {
+            text-align: center;
+            font-size: 26px;
+            color: #00ffc8;
+            margin-bottom: 25px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(0,0,0,0.85);
+            color: #00ffc8;
+            padding: 14px;
+            font-size: 14px;
+        }
+
+        td {
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            font-size: 13px;
+        }
+
+        tr:hover td {
+            background: rgba(0,255,200,0.1);
+            transition: 0.3s;
+        }
+
+        /* ================= STATUS ================= */
+        .status-approved {
+            color: #00ff96;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        /* ================= BUTTONS ================= */
+        .btn-approve {
+            background: linear-gradient(45deg, #00ffc8, #00c6ff);
+            color: black;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 5px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-approve:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-delete {
+            background: linear-gradient(45deg, #ff0050, #ff4d4d);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-delete:hover {
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="#">🌍 Climate AI Admin</a>
+
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'adminhome' %}">
+                        <i class="fa fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'View_Remote_Users' %}">
+                        <i class="fa fa-users"></i> Users List
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'base' %}">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= ALERTS ================= -->
+<div class="alert-box">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="custom-alert 
+                {% if message.tags == 'success' %}alert-success{% endif %}
+                {% if message.tags == 'error' %}alert-error{% endif %}
+                {% if message.tags == 'warning' %}alert-warning{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="main-content">
+
+    <div class="container-fluid">
+        <div class="users-container">
+
+            <h2 class="users-title">View All Remote Users</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.no</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Mobile No</th>
+                            <th>Country</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for o in objects %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{ o.username }}</td>
+                            <td>{{ o.email }}</td>
+                            <td>{{ o.phoneno }}</td>
+                            <td>{{ o.country }}</td>
+                            <td>{{ o.state }}</td>
+                            <td>{{ o.city }}</td>
+
+                            <td>
+                                {% if o.status == "active" %}
+                                    <span class="status-approved">Approved</span>
+                                {% else %}
+                                    <span class="status-pending">waiting</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a href="{% url 'approve_user' o.id %}" class="btn-approve">Approve</a>
+                                <a href="{% url 'delete_user' o.id %}" class="btn-delete">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= AUTO HIDE ALERT ================= -->
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.custom-alert').forEach(alert => {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 3000);
+</script>
+
+</body>
+</html>

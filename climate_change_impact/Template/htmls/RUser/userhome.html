@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.7)),
+                        url("{% static 'bg.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+        }
+
+        /* ================= NAVBAR ================= */
+        .navbar-custom {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        .navbar-brand {
+            color: #00ffc8 !important;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 20px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            color: #00ffc8 !important;
+            transform: scale(1.08);
+        }
+
+        /* ================= TITLE ================= */
+        .page-title {
+            text-align: center;
+            font-size: 28px;
+            color: #00ffc8;
+            margin-top: 100px;
+            margin-bottom: 20px;
+        }
+
+        /* ================= ALERTS ================= */
+        .alert-box {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .custom-alert {
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            color: white;
+            backdrop-filter: blur(15px);
+            transition: 0.4s;
+        }
+
+        .alert-success { background: rgba(0,255,150,0.2); border-left: 5px solid #00ff96; }
+        .alert-error { background: rgba(255,0,80,0.2); border-left: 5px solid #ff0050; }
+        .alert-warning { background: rgba(255,200,0,0.2); border-left: 5px solid #ffc107; }
+
+        /* ================= MAIN CONTENT ================= */
+        .mainholder {
+            padding: 20px 40px;
+        }
+
+        /* ================= CARDS ================= */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card-box {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card-box:hover {
+            transform: translateY(-5px);
+            background: rgba(0,255,200,0.15);
+        }
+
+        .card-box i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #00ffc8;
+        }
+
+        .card-box h5 {
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="#">🌱 Climate AI User</a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            ☰
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="nav">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'userhome' %}">
+                        <i class="fa fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'ViewYourProfile'%}">
+                        <i class="fa fa-user"></i> My Profile
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'view_dataset'%}">
+                        <i class="fa fa-database"></i> Dataset
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'train_model'%}">
+                        <i class="fa fa-cogs"></i> Model Train
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'model_performance'%}">
+                        <i class="fa fa-chart-line"></i> Model Performance
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'Find_Prediction_Of_Climate_Change_Impact_Ratio'%}">
+                        <i class="fa fa-brain"></i> Prediction
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'base' %}">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= ALERTS ================= -->
+<div class="alert-box">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="custom-alert 
+                {% if message.tags == 'success' %}alert-success{% endif %}
+                {% if message.tags == 'error' %}alert-error{% endif %}
+                {% if message.tags == 'warning' %}alert-warning{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- ================= TITLE ================= -->
+<h1 class="page-title">
+    Climate Change Impact Prediction System
+</h1>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="mainholder">
+
+    <!-- DASHBOARD CARDS -->
+    <div class="dashboard-cards">
+
+        <div class="card-box" onclick="location.href='{%url 'ViewYourProfile'%}'">
+            <i class="fa fa-user"></i>
+            <h5>My Profile</h5>
+        </div>
+
+        <div class="card-box" onclick="location.href='{%url 'view_dataset'%}'">
+            <i class="fa fa-database"></i>
+            <h5>Dataset</h5>
+        </div>
+
+        <div class="card-box" onclick="location.href='{%url 'train_model'%}'">
+            <i class="fa fa-cogs"></i>
+            <h5>Model Training</h5>
+        </div>
+
+        <div class="card-box" onclick="location.href='{%url 'model_performance'%}'">
+            <i class="fa fa-chart-line"></i>
+            <h5>Model Performance</h5>
+        </div>
+
+        <div class="card-box" onclick="location.href='{%url 'Find_Prediction_Of_Climate_Change_Impact_Ratio'%}'">
+            <i class="fa fa-brain"></i>
+            <h5>Prediction</h5>
+        </div>
+
+    </div>
+
+</main>
+
+<!-- ================= AUTO HIDE ALERT ================= -->
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.custom-alert').forEach(alert => {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 3000);
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

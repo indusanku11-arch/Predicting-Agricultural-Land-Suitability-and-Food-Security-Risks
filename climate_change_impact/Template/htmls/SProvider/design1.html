@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.7)),
+                        url("{% static 'bg.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+        }
+
+        /* ✅ NAVBAR (MODERN) */
+        .navbar-custom {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        .navbar-brand {
+            color: #00ffc8 !important;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #00ffc8 !important;
+            transform: scale(1.1);
+        }
+
+        /* TITLE */
+        .page-title {
+            text-align: center;
+            font-size: 28px;
+            color: #00ffc8;
+            margin-top: 100px;
+            margin-bottom: 20px;
+        }
+
+        /* ALERTS */
+        .alert-box {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .custom-alert {
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            color: white;
+            backdrop-filter: blur(15px);
+        }
+
+        .alert-success { background: rgba(0,255,150,0.2); border-left: 5px solid #00ff96; }
+        .alert-error { background: rgba(255,0,80,0.2); border-left: 5px solid #ff0050; }
+        .alert-warning { background: rgba(255,200,0,0.2); border-left: 5px solid #ffc107; }
+
+        /* MAIN CONTENT */
+        .mainholder {
+            padding: 20px 40px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ✅ NAVBAR (ONLY YOUR OPTIONS) -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="#">🌍 Climate AI Admin</a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            ☰
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="nav">
+            <ul class="navbar-nav">
+
+                <!-- ✅ KEEP ONLY THESE -->
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'adminhome' %}">
+                        <i class="fa fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'View_Remote_Users' %}">
+                        <i class="fa fa-users"></i> Users List
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'base' %}">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ✅ ALERT MESSAGES -->
+<div class="alert-box">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="custom-alert 
+                {% if message.tags == 'success' %}alert-success{% endif %}
+                {% if message.tags == 'error' %}alert-error{% endif %}
+                {% if message.tags == 'warning' %}alert-warning{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- ✅ TITLE -->
+<h1 class="page-title">
+        Predicting Agricultural Land Suitability and Food Security Risks Using Machine Learning
+</h1>
+
+<!-- ✅ CONTENT BLOCK -->
+<main class="mainholder">
+
+</main>
+
+<!-- AUTO HIDE ALERT -->
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.custom-alert').forEach(alert => {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 3000);
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

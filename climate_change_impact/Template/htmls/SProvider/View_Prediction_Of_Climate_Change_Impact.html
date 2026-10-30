@@ -1,0 +1,137 @@
+{% extends 'SProvider/design1.html' %}
+{% block researchblock %}
+
+<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+<style>
+    .container-fluid {
+        padding: 50px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .prediction-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 1200px;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 1s ease-in;
+    }
+    .prediction-title {
+        font-family: 'Russo One', sans-serif; /* Match design1.html */
+        color: #2e5c52; /* Green */
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .prediction-table-wrapper {
+        max-height: 400px; /* Adjusted from 442px */
+        overflow-y: auto;
+        border: 2px solid #8e4fd1; /* Purple accent */
+        border-radius: 10px;
+    }
+    .prediction-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Russo One', sans-serif;
+    }
+    .prediction-table th, .prediction-table td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #8e4fd1;
+        white-space: nowrap; /* Prevent text wrapping */
+    }
+    .prediction-table th {
+        background-color: #1a3c34; /* Dark green */
+        color: #f4d03f; /* Soft yellow */
+        font-size: 1.1rem;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    .prediction-table td {
+        background-color: #fff;
+        color: #ff4d4d; /* Red for data */
+        font-size: 1rem;
+    }
+    .prediction-table td:last-child {
+        color: #2e5c52; /* Green for prediction */
+        font-weight: bold;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 20px;
+        }
+        .prediction-container {
+            padding: 20px;
+        }
+        .prediction-title {
+            font-size: 1.5rem;
+        }
+        .prediction-table-wrapper {
+            max-height: 300px;
+        }
+        .prediction-table th, .prediction-table td {
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="prediction-container">
+        <h2 class="prediction-title">Climate Change Impact Prediction Details</h2>
+        <div class="prediction-table-wrapper">
+            <table class="prediction-table">
+                <thead>
+                    <tr>
+                        <th>Fid</th>
+                        <th>CDate</th>
+                        <th>Precipitation</th>
+                        <th>Humidity</th>
+                        <th>Wind Speed</th>
+                        <th>Weather Condition</th>
+                        <th>Avg Temp</th>
+                        <th>Avg Temp Uncertainty</th>
+                        <th>City</th>
+                        <th>Country</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Season</th>
+                        <th>Crop</th>
+                        <th>Prediction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in list_objects %}
+                    <tr>
+                        <td>{{ object.Fid }}</td>
+                        <td>{{ object.CDate }}</td>
+                        <td>{{ object.Precipitation }}</td>
+                        <td>{{ object.Humidity }}</td>
+                        <td>{{ object.WindSpeed }}</td>
+                        <td>{{ object.WeatherCondition }}</td>
+                        <td>{{ object.AvgTemp }}</td>
+                        <td>{{ object.AvgTempUncertainty }}</td>
+                        <td>{{ object.City }}</td>
+                        <td>{{ object.Country }}</td>
+                        <td>{{ object.Latitude }}</td>
+                        <td>{{ object.Longitude }}</td>
+                        <td>{{ object.Season }}</td>
+                        <td>{{ object.Crop }}</td>
+                        <td>{{ object.Prediction }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

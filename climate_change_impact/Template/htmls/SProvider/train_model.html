@@ -1,0 +1,99 @@
+{% extends 'SProvider/design.html' %}
+{% block userblock %}
+
+<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+<style>
+    .container-fluid {
+        padding: 50px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .results-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 800px;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 1s ease-in;
+    }
+    .results-title {
+        font-family: 'Russo One', sans-serif; /* Match design1.html */
+        color: #2e5c52; /* Green */
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Russo One', sans-serif;
+    }
+    .results-table th, .results-table td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #8e4fd1; /* Purple accent */
+    }
+    .results-table th {
+        background-color: #1a3c34; /* Dark green */
+        color: #f4d03f; /* Soft yellow */
+        font-size: 1.2rem;
+    }
+    .results-table td {
+        background-color: #fff;
+        color: #333;
+        font-size: 1.1rem;
+    }
+    .results-table td:first-child {
+        color: #ff4d4d; /* Red for model type */
+        font-weight: bold;
+    }
+    .results-table td:last-child {
+        color: #2e5c52; /* Green for accuracy */
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 20px;
+        }
+        .results-container {
+            padding: 20px;
+        }
+        .results-title {
+            font-size: 1.5rem;
+        }
+        .results-table th, .results-table td {
+            padding: 10px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="results-container">
+        <h2 class="results-title">Climate Change Datasets Trained and Tested Results</h2>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Model Type</th>
+                    <th>Accuracy</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objs %}
+                <tr>
+                    <td>{{ object.names }}</td>
+                    <td>{{ object.ratio }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

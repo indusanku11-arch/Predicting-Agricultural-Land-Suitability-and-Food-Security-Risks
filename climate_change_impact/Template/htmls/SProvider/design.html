@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Remote User</title>
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("{% static 'bg.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Russo One', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #ff4d4d; /* Vibrant red for emphasis */
+            text-align: center;
+            font-size: 2.5rem;
+            padding: 20px 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in;
+        }
+        .topnav {
+            background: linear-gradient(90deg, #1a3c34, #2e5c52); /* Green gradient */
+            overflow: hidden;
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .topnav a {
+            float: left;
+            color: #fff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .topnav a:hover {
+            background-color: #8e4fd1; /* Purple hover */
+            color: #fff;
+        }
+        .topnav a.active {
+            background-color: #ff4d4d; /* Red for active */
+            color: #fff;
+        }
+        .mainholder {
+            padding: 40px;
+            text-align: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            .topnav a {
+                float: none;
+                display: block;
+                text-align: left;
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+            .mainholder {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="style1">Predicting Agricultural Land Suitability and Food Security Risks Using Machine Learning</h1>
+    </header>
+
+    <nav class="topnav">
+        <a href="{% url 'Prediction_Of_Climate_Change_Impact' %}">Predict Climate Change Impact</a>
+        <a href="{% url 'ViewYourProfile' %}">View Your Profile</a>
+        <a href="{% url 'charts1' 'line' %}">View Accuracy Results</a>
+        <a href="{% url 'train_model' %}">Train & Test Climate Data Sets</a>
+        <a href="{% url 'login' %}">Logout</a>
+    </nav>
+
+    <main class="mainholder">
+        {% block userblock %}
+        {% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>User Profile</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
+                        url("{% static 'bg.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* ================= NAVBAR ================= */
+        .navbar-custom {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        .navbar-brand {
+            color: #00ffc8 !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #00ffc8 !important;
+            transform: scale(1.08);
+        }
+
+        /* ================= PROFILE WRAPPER ================= */
+        .profile-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 120px;
+        }
+
+        /* ================= PROFILE CARD ================= */
+        .profile-container {
+            position: relative;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+            animation: fadeIn 1s ease;
+        }
+
+        /* glowing border */
+        .profile-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #00ffc8, #00bfff, #7a00ff);
+            -webkit-mask: 
+                linear-gradient(#000 0 0) content-box, 
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        /* ================= AVATAR ================= */
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: auto;
+            background: linear-gradient(135deg, #00ffc8, #00bfff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px #00ffc8;
+        }
+
+        .profile-title {
+            text-align: center;
+            font-size: 26px;
+            color: #00ffc8;
+            margin-bottom: 25px;
+        }
+
+        /* ================= PROFILE ROW ================= */
+        .profile-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .profile-detail:hover {
+            background: rgba(0,255,200,0.15);
+            transform: translateX(5px);
+        }
+
+        .label {
+            font-weight: 500;
+            color: #00ffc8;
+        }
+
+        .value {
+            color: #ffffff;
+            font-weight: 300;
+        }
+
+        /* ================= ANIMATION ================= */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= ALERT ================= */
+        .alert-box {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+        }
+
+        .custom-alert {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="#">🌱 Climate AI User</a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            ☰
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="nav">
+            <ul class="navbar-nav">
+
+<li class="nav-item">
+                    <a class="nav-link" href="{% url 'userhome' %}">
+                        <i class="fa fa-home"></i> Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'ViewYourProfile'%}">
+                        <i class="fa fa-user"></i> My Profile
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'view_dataset'%}">
+                        <i class="fa fa-database"></i> Dataset
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'train_model'%}">
+                        <i class="fa fa-cogs"></i> Model Train
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'model_performance'%}">
+                        <i class="fa fa-chart-line"></i> Model Performance
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'Find_Prediction_Of_Climate_Change_Impact_Ratio'%}">
+                        <i class="fa fa-brain"></i> Prediction
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'base' %}">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= PROFILE ================= -->
+<div class="profile-wrapper">
+    <div class="profile-container">
+
+        <!-- Avatar -->
+        <div class="avatar">
+            {{ object.username|first|upper }}
+        </div>
+
+        <h2 class="profile-title">Your Profile</h2>
+
+        <div class="profile-detail">
+            <span class="label"><i class="fa fa-user"></i> Username</span>
+            <span class="value">{{ object.username }}</span>
+        </div>
+
+        <div class="profile-detail">
+            <span class="label"><i class="fa fa-envelope"></i> Email</span>
+            <span class="value">{{ object.email }}</span>
+        </div>
+
+        <div class="profile-detail">
+            <span class="label"><i class="fa fa-lock"></i> Password</span>
+            <span class="value">********</span>
+        </div>
+
+        <div class="profile-detail">
+            <span class="label"><i class="fa fa-phone"></i> Mobile</span>
+            <span class="value">{{ object.phoneno }}</span>
+        </div>
+
+        <div class="profile-detail">
+            <span class="label"><i class="fa fa-globe"></i> Country</span>
+            <span class="value">{{ object.country }}</span>
+        </div>
+
+        <div class="profile-detail">
+            <span class="label"><i class="fa fa-map"></i> State</span>
+            <span class="value">{{ object.state }}</span>
+        </div>
+
+        <div class="profile-detail">
+            <span class="label"><i class="fa fa-city"></i> City</span>
+            <span class="value">{{ object.city }}</span>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
